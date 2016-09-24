@@ -26,13 +26,38 @@ c2 = [1 1 1;1 1 -1;1 -2 0];
 img_s = max(img_s,1/255);
 img_t = max(img_t,1/255);
 
+mean_s = mean(img_s,2);
+std_s = std(img_s,0,2);
+mean_t = mean(img_t,2);
+std_t = std(img_t,0,2);
+
+str = sprintf('Initial\n\tsource\n\t%f %f\n\t%f %f\n\t%f %f\n\ttarget\n\t%f %f\n\t%f %f\n\t%f %f\n', mean_s(1), std_s(1), mean_s(2), std_s(2), mean_s(3), std_s(3), mean_t(1), std_t(1), mean_t(2), std_t(2), mean_t(3), std_t(3));
+disp(str);
+
+
 % convert to LMS space
 LMS_s = a*img_s';
 LMS_t = a*img_t';
 
+mean_s = mean(LMS_s,2);
+std_s = std(LMS_s,0,2);
+mean_t = mean(LMS_t,2);
+std_t = std(LMS_t,0,2);
+
+str = sprintf('In LMS format\n\tsource\n\t%f %f\n\t%f %f\n\t%f %f\n\ttarget\n\t%f %f\n\t%f %f\n\t%f %f\n', mean_s(1), std_s(1), mean_s(2), std_s(2), mean_s(3), std_s(3), mean_t(1), std_t(1), mean_t(2), std_t(2), mean_t(3), std_t(3));
+disp(str);
+
 % take the log of LMS
 LMS_s = log10(LMS_s);
 LMS_t = log10(LMS_t);
+
+mean_s = mean(LMS_s,2);
+std_s = std(LMS_s,0,2);
+mean_t = mean(LMS_t,2);
+std_t = std(LMS_t,0,2);
+str = sprintf('After log10\n\tsource\n\t%f %f\n\t%f %f\n\t%f %f\n\ttarget\n\t%f %f\n\t%f %f\n\t%f %f\n', mean_s(1), std_s(1), mean_s(2), std_s(2), mean_s(3), std_s(3), mean_t(1), std_t(1), mean_t(2), std_t(2), mean_t(3), std_t(3));
+disp(str);
+
 
 % convert to lab space
 lab_s = b*c*LMS_s;
@@ -43,6 +68,9 @@ mean_s = mean(lab_s,2);
 std_s = std(lab_s,0,2);
 mean_t = mean(lab_t,2);
 std_t = std(lab_t,0,2);
+
+str = sprintf('Final(in lab) \n\tsource\n\t%f %f\n\t%f %f\n\t%f %f\n\ttarget\n\t%f %f\n\t%f %f\n\t%f %f\n', mean_s(1), std_s(1), mean_s(2), std_s(2), mean_s(3), std_s(3), mean_t(1), std_t(1), mean_t(2), std_t(2), mean_t(3), std_t(3));
+disp(str);
 
 res_lab = zeros(3,x*y);
 
@@ -60,4 +88,6 @@ end
 
 % convert back to RGB
 est_im = ([4.4679 -3.5873 0.1193;-1.2186 2.3809 -0.1624;0.0497 -0.2439 1.2045]*LMS_res)';
+est_im = min(est_im, 1.0);
+est_im = max(est_im, 1/255);
 est_im = reshape(est_im,size(source)); % reshape the image
