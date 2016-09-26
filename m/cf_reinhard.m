@@ -23,8 +23,8 @@ c = [1 1 1;1 1 -2;1 -1 0];
 b2 = [sqrt(3)/3 0 0;0 sqrt(6)/6 0;0 0 sqrt(2)/2];
 c2 = [1 1 1;1 1 -1;1 -2 0];
 
-img_s = max(img_s,1/255);
-img_t = max(img_t,1/255);
+%img_s = max(img_s,1/255);
+%img_t = max(img_t,1/255);
 
 mean_s = mean(img_s,2);
 std_s = std(img_s,0,2);
@@ -33,6 +33,7 @@ std_t = std(img_t,0,2);
 
 str = sprintf('Initial\n\tsource\n\t%f %f\n\t%f %f\n\t%f %f\n\ttarget\n\t%f %f\n\t%f %f\n\t%f %f\n', mean_s(1), std_s(1), mean_s(2), std_s(2), mean_s(3), std_s(3), mean_t(1), std_t(1), mean_t(2), std_t(2), mean_t(3), std_t(3));
 disp(str);
+
 
 
 % convert to LMS space
