@@ -7,8 +7,8 @@
 
 % Copyright 2015 Han Gong, University of East Anglia
 
-I0 = im2double(imread('test_1.png'));
-I1 = im2double(imread('test_1.png'));
+I0 = im2double(imread('img_3.jpg'));
+I1 = im2double(imread('img_4.jpg'));
 
 IR = cf_reinhard(I0,I1);
 
@@ -16,3 +16,4 @@ figure;
 subplot(1,3,1); imshow(I0); title('Original Image'); axis off
 subplot(1,3,2); imshow(I1); title('Target Palette'); axis off
 subplot(1,3,3); imshow(IR); title('Result After Colour Transfer'); axis off
+imwrite(IR, 'result.jpg');
